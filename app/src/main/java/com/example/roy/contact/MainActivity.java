@@ -122,6 +122,10 @@ public class MainActivity extends AppCompatActivity {
                 n2 = Integer.parseInt(num2.getText().toString());
 
                 res_num = n1 * n2;
+                if(res_num < 0 || res_num > Integer.MAX_VALUE) {
+                    result.setText(R.string.error3);
+                    return;
+                }
                 result.setText(String.valueOf((int)res_num));
             }
         });
