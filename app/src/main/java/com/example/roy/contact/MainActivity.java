@@ -1,5 +1,6 @@
 package com.example.roy.contact;
 
+import android.os.AsyncTask;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -8,7 +9,19 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.math.BigInteger;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 import static java.lang.Integer.MAX_VALUE;
 
@@ -19,6 +32,9 @@ public class MainActivity extends AppCompatActivity {
 
     int res_num;
     int n1, n2;
+
+    TextView text;
+    Button hit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +49,64 @@ public class MainActivity extends AppCompatActivity {
         sub = (Button) findViewById(R.id.sub);
         mul = (Button) findViewById(R.id.mul);
         div = (Button) findViewById(R.id.div);
+
+        //---------------------//
+        Button btnHit = (Button) findViewById(R.id.btnHit);
+        //final TextView txt = (TextView) findViewById(R.id.json);
+        //------------------------//
+        text = (TextView) findViewById(R.id.json);
+        hit = (Button) findViewById(R.id.js);
+
+        hit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new doit().execute();
+            }
+        });
+
+
+
+
+        /*
+        btnHit.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v){
+                HttpURLConnection conn = null;
+                BufferedReader reader =  null;
+
+                try{
+                    URL url = new URL("https://jsonparsingdemo-cec5b.firebaseapp.com/jsonData/moviesDemoItem.txt");
+                    conn = (HttpURLConnection) url.openConnection();
+                    conn.connect();
+
+                    InputStream stream = conn.getInputStream();
+                    reader = new BufferedReader(new InputStreamReader(stream));
+
+                    StringBuffer buffer = new StringBuffer();
+                    String line = "";
+                    while((line = reader.readLine()) != null){
+                        buffer.append(line);
+                    }
+
+                    txt.setText(buffer.toString());
+
+                } catch (MalformedURLException e){
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }finally{
+                    if(conn != null){
+                        conn.disconnect();
+                    }
+                    try{
+                        if(reader != null) reader.close();
+                    }catch(IOException e){
+                        e.printStackTrace();
+                    }
+                }
+
+            }
+        });
+        */
 
         add.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -120,12 +194,13 @@ public class MainActivity extends AppCompatActivity {
 
                 n1 = Integer.parseInt(num1.getText().toString());
                 n2 = Integer.parseInt(num2.getText().toString());
+                long res = n1 * n2;
 
-                res_num = n1 * n2;
-                if(res_num < 0 || res_num > Integer.MAX_VALUE) {
+                if(res < 0 || res > Integer.MAX_VALUE) {
                     result.setText(R.string.error3);
                     return;
                 }
+                res_num = n1 * n2;
                 result.setText(String.valueOf((int)res_num));
             }
         });
@@ -165,5 +240,29 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+    }
+    public class doit extends AsyncTask<Void, Void, Void>{
+String words;
+        @Override
+        protected Void doInBackground(Void... params) {
+            try {
+                Document doc = Jsoup.connect("https://coinmarketcap.com/currencies/ethereum/").get();
+                words = doc.select("span#quote_price").text();
+
+            }catch(IOException e){
+                e.printStackTrace();
+            }
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            String res = "1 Ether = " + words;
+            text.setText(res);
+            num1.setText("1");
+            num2.setText(words.substring(1,4));
+        }
     }
 }

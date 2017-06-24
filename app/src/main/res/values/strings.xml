@@ -9,4 +9,5 @@
     <string name="error">ERROR, Enter 2 numbers</string>
     <string name="error2">ERROR, undefined</string>
     <string name="error3">ERROR, too large number</string>
+    <string name="ether">Press to see price!</string>
 </resources>
