@@ -22,6 +22,8 @@ import java.math.BigInteger;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 
 import static java.lang.Integer.MAX_VALUE;
 
@@ -30,11 +32,11 @@ public class MainActivity extends AppCompatActivity {
     EditText num1, num2;
     Button add, sub, div, mul;
 
-    int res_num;
-    int n1, n2;
+    double res_num;
+    double n1, n2;
 
     TextView text;
-    Button hit;
+    Button ethHit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,17 +57,14 @@ public class MainActivity extends AppCompatActivity {
         //final TextView txt = (TextView) findViewById(R.id.json);
         //------------------------//
         text = (TextView) findViewById(R.id.json);
-        hit = (Button) findViewById(R.id.js);
+        ethHit = (Button) findViewById(R.id.js);
 
-        hit.setOnClickListener(new View.OnClickListener() {
+        ethHit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new doit().execute();
+                new doIt().execute();
             }
         });
-
-
-
 
         /*
         btnHit.setOnClickListener(new View.OnClickListener(){
@@ -117,24 +116,23 @@ public class MainActivity extends AppCompatActivity {
                     result.setText(getString(R.string.error));
                     return;
                 }
-                long a  = Long.parseLong(num1.getText().toString());
-                long b  = Long.parseLong(num2.getText().toString());
+
+                double a  = Double.parseDouble(num1.getText().toString());
+                double b  = Double.parseDouble(num2.getText().toString());
 
                 if(a > Integer.MAX_VALUE || b > Integer.MAX_VALUE){
                     result.setText(R.string.error3);
                     return;
                 }
+                n1 = Double.parseDouble(num1.getText().toString());
+                n2 = Double.parseDouble(num2.getText().toString());
 
-                n1 = Integer.parseInt(num1.getText().toString());
-                n2 = Integer.parseInt(num2.getText().toString());
-
-                if(n1 > MAX_VALUE - n2){
+                if(n1 > Double.MAX_VALUE - n2){
                     result.setText(getString(R.string.error3));
                     return;
                 }
-            res_num = n1 + n2;
-            result.setText(String.valueOf(res_num));
-
+                res_num = (double) n1 + n2;
+               result.setText(NumberFormat.getInstance().format(res_num));
             }
 
         });
@@ -147,25 +145,19 @@ public class MainActivity extends AppCompatActivity {
                     result.setText(getString(R.string.error));
                     return;
                 }
-                if (num1.getText().toString().length() >= 11){
-                    result.setText(getString(R.string.error3));
-                    return;
-                }else if(num2.getText().toString().length() >= 11){
-                    result.setText(getString(R.string.error3));
-                    return;
-                }
-                long a  = Long.parseLong(num1.getText().toString());
-                long b  = Long.parseLong(num2.getText().toString());
+
+                double a  = Double.parseDouble(num1.getText().toString());
+                double b  = Double.parseDouble(num2.getText().toString());
                 if(a > Integer.MAX_VALUE || b > Integer.MAX_VALUE){
                     result.setText(R.string.error3);
                     return;
                 }
 
-                n1 = Integer.parseInt(num1.getText().toString());
-                n2 = Integer.parseInt(num2.getText().toString());
+                n1 = Double.parseDouble(num1.getText().toString());
+                n2 = Double.parseDouble(num2.getText().toString());
 
                 res_num = n1 - n2;
-                result.setText(String.valueOf((int)res_num));
+                result.setText(NumberFormat.getInstance().format(res_num));
             }
         });
 
@@ -177,31 +169,26 @@ public class MainActivity extends AppCompatActivity {
                     result.setText(getString(R.string.error));
                     return;
                 }
-                if (num1.getText().toString().length() >= 11){
-                    result.setText(getString(R.string.error3));
-                    return;
-                }else if(num2.getText().toString().length() >= 11){
-                    result.setText(getString(R.string.error3));
-                    return;
-                }
 
-                long a  = Long.parseLong(num1.getText().toString());
-                long b  = Long.parseLong(num2.getText().toString());
+                double a  = Double.parseDouble(num1.getText().toString());
+                double b  = Double.parseDouble(num2.getText().toString());
                 if(a > Integer.MAX_VALUE || b > Integer.MAX_VALUE){
                     result.setText(R.string.error3);
                     return;
                 }
 
-                n1 = Integer.parseInt(num1.getText().toString());
-                n2 = Integer.parseInt(num2.getText().toString());
-                long res = n1 * n2;
+                n1 = Double.parseDouble(num1.getText().toString());
+                n2 = Double.parseDouble(num2.getText().toString());
+                double res = (double) n1 * n2;
 
                 if(res < 0 || res > Integer.MAX_VALUE) {
                     result.setText(R.string.error3);
                     return;
                 }
+
+
                 res_num = n1 * n2;
-                result.setText(String.valueOf((int)res_num));
+                result.setText(NumberFormat.getInstance().format(res_num));
             }
         });
 
@@ -213,36 +200,30 @@ public class MainActivity extends AppCompatActivity {
                     result.setText(getString(R.string.error));
                     return;
                 }
-                if (num1.getText().toString().length() >= 11){
-                    result.setText(getString(R.string.error3));
-                    return;
-                }else if(num2.getText().toString().length() >= 11){
-                    result.setText(getString(R.string.error3));
-                    return;
-                }
 
-                long a  = Long.parseLong(num1.getText().toString());
-                long b  = Long.parseLong(num2.getText().toString());
+                double a  = Double.parseDouble(num1.getText().toString());
+                double b  = Double.parseDouble(num2.getText().toString());
                 if(a > Integer.MAX_VALUE || b > Integer.MAX_VALUE){
                     result.setText(R.string.error3);
                     return;
 
                 }
 
-                n1 = Integer.parseInt(num1.getText().toString());
-                n2 = Integer.parseInt(num2.getText().toString());
+                n1 = Double.parseDouble(num1.getText().toString());
+                n2 = Double.parseDouble(num2.getText().toString());
                 if(n2 == 0) {
                     result.setText(getString(R.string.error2));
                     return;
                 }
                 res_num = n1 / n2;
-                result.setText(String.valueOf((int)res_num));
+                result.setText(NumberFormat.getInstance().format(res_num));
             }
         });
 
     }
-    public class doit extends AsyncTask<Void, Void, Void>{
-String words;
+
+    private class doIt extends AsyncTask<Void, Void, Void>{
+    String words;
         @Override
         protected Void doInBackground(Void... params) {
             try {
@@ -252,17 +233,17 @@ String words;
             }catch(IOException e){
                 e.printStackTrace();
             }
-
             return null;
         }
-
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
             String res = "1 Ether = " + words;
+            result.setText(R.string.Result);
             text.setText(res);
             num1.setText("1");
-            num2.setText(words.substring(1,4));
+            num2.setText(words.substring(1,words.length()));
+
         }
     }
 }

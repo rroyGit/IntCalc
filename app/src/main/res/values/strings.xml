@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Int Calculator</string>
+    <string name="app_name">Calculator</string>
     <string name="Result">Result</string>
     <string name="zero">0</string>
     <string name="add">add</string>
