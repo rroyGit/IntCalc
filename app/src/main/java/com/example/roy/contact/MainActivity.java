@@ -2,6 +2,9 @@ package com.example.roy.contact;
 
 import android.os.AsyncTask;
 import android.support.annotation.Nullable;
+import android.support.constraint.ConstraintLayout;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -10,6 +13,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import org.jsoup.Jsoup;
+import org.jsoup.helper.StringUtil;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
@@ -31,12 +35,12 @@ public class MainActivity extends AppCompatActivity {
     TextView result;
     EditText num1, num2;
     Button add, sub, div, mul;
+    TextView text;
+    Button ethHit;
 
     double res_num;
     double n1, n2;
 
-    TextView text;
-    Button ethHit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -217,6 +221,18 @@ public class MainActivity extends AppCompatActivity {
                 }
                 res_num = n1 / n2;
                 result.setText(NumberFormat.getInstance().format(res_num));
+            }
+        });
+
+        btnHit.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                String res = result.getText().toString();
+                res = res.replace(",", "");
+                String res2 = res.replace(".","");
+                if(StringUtil.isNumeric(res2)) {
+                    num1.setText(res);
+                }
             }
         });
 
