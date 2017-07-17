@@ -32,14 +32,14 @@ import java.text.NumberFormat;
 import static java.lang.Integer.MAX_VALUE;
 
 public class MainActivity extends AppCompatActivity {
-    TextView result;
-    EditText num1, num2;
-    Button add, sub, div, mul;
-    TextView text;
-    Button ethHit;
+    private TextView result;
+    private EditText num1, num2;
+    private Button add, sub, div, mul;
+    private TextView text;
+    private Button ethHit;
 
-    double res_num;
-    double n1, n2;
+    private double res_num;
+    private double n1, n2;
 
 
     @Override
@@ -66,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
         ethHit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new doIt().execute();
+                new getEther().execute();
             }
         });
 
@@ -135,7 +135,7 @@ public class MainActivity extends AppCompatActivity {
                     result.setText(getString(R.string.error3));
                     return;
                 }
-                res_num = (double) n1 + n2;
+                res_num =  n1 + n2;
                result.setText(NumberFormat.getInstance().format(res_num));
             }
 
@@ -183,7 +183,7 @@ public class MainActivity extends AppCompatActivity {
 
                 n1 = Double.parseDouble(num1.getText().toString());
                 n2 = Double.parseDouble(num2.getText().toString());
-                double res = (double) n1 * n2;
+                double res = n1 * n2;
 
                 if(res < 0 || res > Integer.MAX_VALUE) {
                     result.setText(R.string.error3);
@@ -238,7 +238,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private class doIt extends AsyncTask<Void, Void, Void>{
+    private class getEther extends AsyncTask<Void, Void, Void>{
     String words;
         @Override
         protected Void doInBackground(Void... params) {
